@@ -13,8 +13,14 @@ import java.util.Random;
 
 public class SimpleHider implements Hider
 {
+    /**
+     * pixel color channels to be used to hide information
+     */
     private final List<Channel> usedChannels;
 
+    /**
+     * the number of pixels used in the color channel
+     */
     private final int qInByte;
 
 

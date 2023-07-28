@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 
-public class ImgUtils
+public class TestUtils
 {
     static BufferedImage makeImageCopy(BufferedImage imageToCopy)
     {
@@ -12,5 +12,15 @@ public class ImgUtils
         Graphics g = result.getGraphics();
         g.drawImage(imageToCopy, 0, 0, null);
         return result;
+    }
+
+    static int calcNumOfErr(byte[] arr1, byte[] arr2)
+    {
+        int numOfErr = 0;
+        for (int i = 0; i < arr1.length; i++)
+            if (arr1[i] != arr2[i])
+                numOfErr++;
+
+        return numOfErr;
     }
 }
