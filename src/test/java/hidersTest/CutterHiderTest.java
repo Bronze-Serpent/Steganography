@@ -7,7 +7,6 @@ import hiders.HiderSizeException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 
 import static hidersTest.RegularHidersTests.*;
 
@@ -29,14 +28,14 @@ public class CutterHiderTest
 
 
     @Test
-    public void isInfCanBePlaced() throws IOException
+    public void isInfCanBePlaced()
     {
-        Assert.assertTrue(RegularHidersTests.isInfCanBePlaced(HIDER, REGULAR_PIC, INF));
+        Assert.assertTrue(RegularHidersTests.isInfCanBePlaced(HIDER, REGULAR_PIC, REGULAR_INF));
     }
 
 
     @Test
-    public void isInfCanNOTBePlaced() throws IOException
+    public void isInfCanNOTBePlaced()
     {
         byte[] inf = new byte[5000];
 
@@ -50,12 +49,10 @@ public class CutterHiderTest
         try
         {
             byte[] takenOutInf = RegularHidersTests.hideTakenOutInf(HIDER,
-                    DARK_PIC_2, INF);
+                    DARK_PIC_2, REGULAR_INF);
 
-            Assert.assertEquals(INF.length, takenOutInf.length);
-            Assert.assertTrue(TestUtils.calcNumOfErr(INF, takenOutInf) * 1.0 / takenOutInf.length < 0.02);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertEquals(REGULAR_INF.length, takenOutInf.length);
+            Assert.assertTrue(TestUtils.calcNumOfErr(REGULAR_INF, takenOutInf) * 1.0 / takenOutInf.length < 0.02);
         } catch (HiderSizeException e) {
             Assert.fail();
         }

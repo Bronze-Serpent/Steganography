@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import utils.Channel;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,16 +28,16 @@ public class SimpleHiderTest
 
 
     @Test
-    public void isInfCanBePlaced() throws IOException
+    public void isInfCanBePlaced()
     {
         Hider hider = new SimpleHider(Collections.singletonList(Channel.BLUE), 1);
 
-        Assert.assertTrue(RegularHidersTests.isInfCanBePlaced(hider, REGULAR_PIC, INF));
+        Assert.assertTrue(RegularHidersTests.isInfCanBePlaced(hider, REGULAR_PIC, REGULAR_INF));
     }
 
 
     @Test
-    public void isInfCanNOTBePlaced() throws IOException
+    public void isInfCanNOTBePlaced()
     {
         Hider hider = new SimpleHider(Collections.singletonList(Channel.BLUE), 1);
         byte[] inf = new byte[25];
@@ -54,13 +53,11 @@ public class SimpleHiderTest
         try
         {
             byte[] takenOutInf = RegularHidersTests.hideTakenOutInf(hider,
-                    REGULAR_PIC, INF);
+                    REGULAR_PIC, REGULAR_INF);
 
-            Assert.assertEquals(INF.length, takenOutInf.length);
-            Assert.assertTrue(TestUtils.calcNumOfErr(INF, takenOutInf) * 1.0 / takenOutInf.length < 0.01);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (HiderSizeException e) {
+            Assert.assertEquals(REGULAR_INF.length, takenOutInf.length);
+            Assert.assertTrue(TestUtils.calcNumOfErr(REGULAR_INF, takenOutInf) * 1.0 / takenOutInf.length < 0.01);
+        }catch (HiderSizeException e) {
             Assert.fail();
         }
     }
@@ -73,12 +70,10 @@ public class SimpleHiderTest
         try
         {
             byte[] takenOutInf = RegularHidersTests.hideTakenOutInf(hider,
-                    REGULAR_PIC, INF);
+                    REGULAR_PIC, REGULAR_INF);
 
-            Assert.assertEquals(INF.length, takenOutInf.length);
-            Assert.assertTrue(TestUtils.calcNumOfErr(INF, takenOutInf) * 1.0 / takenOutInf.length < 0.01);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertEquals(REGULAR_INF.length, takenOutInf.length);
+            Assert.assertTrue(TestUtils.calcNumOfErr(REGULAR_INF, takenOutInf) * 1.0 / takenOutInf.length < 0.01);
         } catch (HiderSizeException e) {
             Assert.fail();
         }
@@ -92,12 +87,10 @@ public class SimpleHiderTest
         try
         {
             byte[] takenOutInf = RegularHidersTests.hideTakenOutInf(hider,
-                    REGULAR_PIC, INF);
+                    REGULAR_PIC, REGULAR_INF);
 
-            Assert.assertEquals(INF.length, takenOutInf.length);
-            Assert.assertTrue(TestUtils.calcNumOfErr(INF, takenOutInf) * 1.0 / takenOutInf.length < 0.01);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertEquals(REGULAR_INF.length, takenOutInf.length);
+            Assert.assertTrue(TestUtils.calcNumOfErr(REGULAR_INF, takenOutInf) * 1.0 / takenOutInf.length < 0.01);
         } catch (HiderSizeException e) {
             Assert.fail();
         }

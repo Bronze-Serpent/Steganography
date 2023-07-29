@@ -2,12 +2,50 @@ package utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 
 public class ColorUtils
 {
 
     private static final double[] COLOR_RATIO = new double[]{0.299, 0.587, 0.114};
+
+
+    public static void makeGroupABrighterThanGroupB(BufferedImage img, java.util.List<Coordinate> gA, List<Coordinate> gB)
+    {
+        double gABrightness = calcAvgBrightness(img, gA);
+        double gBBrightness = calcAvgBrightness(img, gB);
+
+        if (Double.compare(gABrightness - gBBrightness, 0) > -1)
+            return;
+
+        int diff = (int) (Math.round(gBBrightness - gABrightness));
+        makeGroupBrighter(img, gA, COLOR_RATIO, diff + 1);
+    }
+
+
+    public static double calcAvgBrightness(BufferedImage img, List<Coordinate> pixelCoord)
+    {
+        return pixelCoord.stream()
+                .map(c -> new Color(img.getRGB(c.x(), c.y())))
+                .mapToDouble(ColorUtils::calcBrightness)
+                .average().orElseThrow(() -> new IllegalArgumentException(
+                        "it is impossible to calculate the average value. pixelCoord is empty"));
+    }
+
+
+    public static void makeGroupBrighter(BufferedImage img, List<Coordinate> group, double[] colorRatio, int incr)
+    {
+        for (Coordinate c : group)
+        {
+            Color oldColor = new Color(img.getRGB(c.x(), c.y()));
+            int[] incChannelsVal = MathUtils.increaseTheAvgOfElem(new int[]{oldColor.getRed(), oldColor.getGreen(),
+                    oldColor.getBlue()}, colorRatio, incr);
+            Color newColor = new Color(incChannelsVal[0], incChannelsVal[1], incChannelsVal[2]);
+
+            img.setRGB(c.x(), c.y(), newColor.getRGB());
+        }
+    }
 
 
     public static double calcBrightness(Color c)
