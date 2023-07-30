@@ -1,20 +1,21 @@
 package hidersTest;
 
 
-import hiders.CutterHider;
 import hiders.Hider;
 import hiders.HiderSizeException;
+import hiders.KochZhaoHider;
 import org.junit.Assert;
 import org.junit.Test;
+import utils.Channel;
 
+import java.util.List;
 
 import static hidersTest.RegularHidersTests.*;
+import static hidersTest.RegularHidersTests.REGULAR_INF;
 
-
-public class CutterHiderTest
+public class KochZhaoHiderTest
 {
-
-    private final Hider HIDER = new CutterHider(0.6, 2);
+    private final Hider HIDER = new KochZhaoHider(8, 12, Channel.BLUE, List.of(3, 4), 1234);
 
 
     @Test(expected = HiderSizeException.class)
@@ -24,7 +25,6 @@ public class CutterHiderTest
 
         RegularHidersTests.unplaceableInf(HIDER, THE_SMALLEST_PIC, inf);
     }
-
 
 
     @Test
@@ -37,7 +37,7 @@ public class CutterHiderTest
     @Test
     public void isInfCanNOTBePlaced()
     {
-        byte[] inf = new byte[4_000];
+        byte[] inf = new byte[1500];
 
         Assert.assertFalse(RegularHidersTests.isInfCanBePlaced(HIDER, REGULAR_PIC, inf));
     }

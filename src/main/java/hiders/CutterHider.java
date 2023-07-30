@@ -1,12 +1,10 @@
 package hiders;
 
-import utils.ByteDistributor;
-import utils.Channel;
-import utils.ColorUtils;
-import utils.MathUtils;
+import utils.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Random;
 
 
@@ -36,7 +34,8 @@ public class CutterHider implements Hider
     {
         if (!willTheInfFit(stegoContainer, inf))
         {
-            int contSize = stegoContainer.getHeight() * stegoContainer.getWidth() / MathUtils.numOfSquaresInACircle(areaForCalcAvg);
+            int contSize = MathUtils.breakIntoWholeBlocks(stegoContainer.getWidth(),
+                    stegoContainer.getHeight(), areaForCalcAvg * 2 + 1).size();
             throw new HiderSizeException(inf.length * 8, contSize);
         }
 
@@ -62,7 +61,8 @@ public class CutterHider implements Hider
     @Override
     public byte[] takeOutInf(BufferedImage stegoContainer, int bytesQuantity) throws HiderSizeException
     {
-        int contSize = stegoContainer.getHeight() * stegoContainer.getWidth() / MathUtils.numOfSquaresInACircle(areaForCalcAvg);
+        int contSize = MathUtils.breakIntoWholeBlocks(stegoContainer.getWidth(),
+                stegoContainer.getHeight(), areaForCalcAvg * 2 + 1).size();
         if (bytesQuantity > contSize)
             throw new HiderSizeException(bytesQuantity, contSize);
 
@@ -92,7 +92,10 @@ public class CutterHider implements Hider
     // that the areas for determining the average color value will not intersect.
     public static boolean willTheInfFitInTheCont(BufferedImage stegoContainer, byte[] inf, int q)
     {
-        return stegoContainer.getHeight() * stegoContainer.getWidth() / MathUtils.numOfSquaresInACircle(q) > inf.length * 8;
+        List<List<Coordinate>> wholeBlocks = MathUtils.breakIntoWholeBlocks(stegoContainer.getWidth(),
+                stegoContainer.getHeight(), q * 2 + 1);
+
+        return wholeBlocks.size() - 1 > inf.length * 8;
     }
 
 

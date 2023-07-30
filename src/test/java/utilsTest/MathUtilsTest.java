@@ -15,6 +15,26 @@ public class MathUtilsTest
 
 
     @Test
+    public void shoulduseBorders()
+    {
+        double[] values = new double[]{-5.432, 100.54, 143.534, 75.223};
+        int[] roundedValues = new int[]{0, 100, 100, 75};
+
+        Assert.assertArrayEquals(roundedValues, MathUtils.roundToBorders(0, 100, values));
+    }
+
+
+    @Test
+    public void shouldRoundElements()
+    {
+        double[] values = new double[]{0.542, 23.32, 75.23};
+        int[] roundedValues = new int[]{1, 23, 75};
+
+        Assert.assertArrayEquals(roundedValues, MathUtils.roundToBorders(0, 100, values));
+    }
+
+
+    @Test
     public void shouldSet3ElemToTheTop()
     {
         int[] values = new int[]{242, 250, 253};
@@ -87,17 +107,4 @@ public class MathUtilsTest
         Assert.assertEquals(0, breakIntoWholeBlocks(16, 18, 0).size());
     }
 
-
-    @Test
-    public void zeroRadCircle()
-    {
-        Assert.assertEquals(0, MathUtils.numOfSquaresInACircle(0));
-    }
-
-
-    @Test
-    public void numOfSquaresInACircle()
-    {
-        Assert.assertEquals(80, MathUtils.numOfSquaresInACircle(5));
-    }
 }

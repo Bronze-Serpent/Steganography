@@ -1,18 +1,41 @@
 package utilsTest;
 
 
+import hidersTest.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import utils.Channel;
 import utils.ColorUtils;
+import utils.Coordinate;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static hidersTest.RegularHidersTests.REGULAR_PIC;
 
 
 public class ColorUtilsTest
 {
+
+    @Test
+    public void shouldWriteColors()
+    {
+        BufferedImage imgCopy = TestUtils.makeImageCopy(REGULAR_PIC);
+        List<Coordinate> block = List.of(new Coordinate(0, 0), new Coordinate(1, 0),
+                new Coordinate(1, 1), new Coordinate(2, 1), new Coordinate(2, 2));
+        List<Integer> colorValues = Stream.generate(() -> 0).limit(block.size()).toList();
+        Channel ch = Channel.BLUE;
+
+        ColorUtils.writeNewColors(imgCopy, block, colorValues, ch);
+
+        if (ColorUtils.getChannelVal(imgCopy.getRGB(0, 0), ch) != 0 || ColorUtils.getChannelVal(imgCopy.getRGB(1, 0), ch) != 0 ||
+            ColorUtils.getChannelVal(imgCopy.getRGB(1, 1), ch) != 0 || ColorUtils.getChannelVal(imgCopy.getRGB(2, 1), ch) != 0 ||
+                ColorUtils.getChannelVal(imgCopy.getRGB(2, 2), ch) != 0)
+            Assert.fail();
+    }
+
 
     @Test
     public void getChannelValTest()

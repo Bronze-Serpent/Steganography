@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class TestUtils
 {
-    static BufferedImage makeImageCopy(BufferedImage imageToCopy)
+    public static BufferedImage makeImageCopy(BufferedImage imageToCopy)
     {
         BufferedImage result = new BufferedImage(imageToCopy.getWidth(), imageToCopy.getHeight(), imageToCopy.getType());
         Graphics g = result.getGraphics();
